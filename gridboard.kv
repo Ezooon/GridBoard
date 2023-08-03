@@ -1,0 +1,124 @@
+#:import GridSetup grid_setup.GridSetup
+#:import ThemesAssets themes_assets.ThemesAssets
+#:import ResourcesScreen resources.ResourcesScreen
+#:import GameScreen game_screen.GameScreen
+#:import Die die.Die
+#:import randint random.randint
+
+<Game>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'assets/Sky.png'
+
+    MDScreen:
+        name: "welcome_screen"
+        Die:
+            size: dp(100), dp(100)
+            pos: randint(0, root.width-dp(100)), randint(0, root.height-dp(100))
+            on_face:
+                if self.face == 6: root.current = "credit"
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            spacing: dp(30)
+            adaptive_size: True
+            pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+            MDTextButton:
+                text: 'PLAY'
+                font_size: sp(30)
+                on_release:
+                    if root.game_set: root.current = "game_screen"
+                    if not root.game_set: root.current = "themes_assets"
+            MDRaisedButton:
+                text: 'Choose Game'
+                font_size: sp(30)
+                on_release:
+                    root.current = "themes_assets"
+
+    MDScreen:
+        name: "new_game"
+        back_click_to: 'themes_assets'
+        MDTextField:
+            id: editing_set_text_field
+            hint_text: "New Game Name"
+            pos: new_game_option.x, new_game_option.top
+            size_hint: None, None
+            text: root.editing_set.name
+            width: new_game_option.width
+        MDGridLayout:
+            id: new_game_option
+            cols: 2
+            spacing: dp(30)
+            adaptive_size: True
+            pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+            MDRectangleFlatButton:
+                text: 'Grid'
+                font_size: sp(18)
+                on_release:
+                    root.current = 'grid_setup'
+            Widget:
+#            MDRectangleFlatButton:
+#                text: 'Coming Soon' # ToDo more settings for the pieces
+#                font_size: sp(18)
+            MDRectangleFlatButton:
+                text: 'Start Positioning'
+                font_size: sp(18)
+                on_release:
+                    root.current = 'edit_game_screen'
+            MDRectangleFlatButton:
+                text: 'Resources'
+                font_size: sp(18)
+                on_release:
+                    root.current = 'resources'
+            MDRaisedButton:
+                text: 'Save'
+                font_size: sp(18)
+                on_release:
+                    root.editing_set_save()
+            MDRaisedButton:
+                text: 'Cancel'
+                font_size: sp(18)
+                on_release:
+                    root.current = 'themes_assets'
+
+    GameScreen:
+        id: game_screen
+        name: 'game_screen'
+        back_click_to: 'welcome_screen'
+
+    GameScreen:
+        id: edit_game_screen
+        name: 'edit_game_screen'
+        back_click_to: 'new_game'
+        editing: True
+
+    GridSetup:
+        name: 'grid_setup'
+        back_click_to: 'new_game'
+
+    ThemesAssets:
+        name: 'themes_assets'
+        back_click_to: 'welcome_screen'
+
+    ResourcesScreen:
+        name: 'resources'
+        back_click_to: 'new_game'
+
+    MDScreen:
+        name: "credit"
+        MDIconButton:
+            icon: "arrow-left"
+            top: root.top - dp(10)
+            x: dp(10)
+            on_release:
+                app.root.current = 'welcome_screen'
+        ScrollView:
+            size_hint: 1, 1
+            Label:
+                size_hint: None, None
+                size: self.texture_size
+                text: root.credit

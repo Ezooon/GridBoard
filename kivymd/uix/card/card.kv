@@ -1,0 +1,29 @@
+<MDCardSwipeLayerBox>:
+    md_bg_color: app.theme_cls.divider_color
+
+
+<MDCard>
+    md_bg_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: self.md_bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: root.radius
+            source: root.background
+
+    canvas.after:
+        Color:
+            rgba: app.theme_cls.primary_color
+        Line:
+            width: dp(1)
+            rounded_rectangle:
+                self.x, self.y, self.width, self.height, dp(10), 100
+
+
+<MDSeparator>
+    md_bg_color:
+        self.theme_cls.divider_color \
+        if not root.color \
+        else root.color

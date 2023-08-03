@@ -1,0 +1,44 @@
+{
+    "grid": {
+        "cols": 3,
+        "rows": 3,
+        "border": true,
+        "background": false,
+        "line_color": [
+            255.0,
+            255.0,
+            255.0,
+            235.48469387755102
+        ],
+        "size": [
+            350.0,
+            350.0
+        ]
+    },
+    "dies": [
+        0,
+        []
+    ],
+    "pieces": {
+        "black.png": {
+            "num": 0,
+            "poses": []
+        },
+        "blue.png": {
+            "num": 0,
+            "poses": []
+        },
+        "green.png": {
+            "num": 0,
+            "poses": []
+        },
+        "red.png": {
+            "num": 0,
+            "poses": []
+        },
+        "white.png": {
+            "num": 0,
+            "poses": []
+        }
+    }
+}

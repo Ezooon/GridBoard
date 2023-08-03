@@ -1,0 +1,89 @@
+<APiece>:
+    orientation: "vertical"
+    size_hint: None, 1
+    width: dp(50)
+    Image:
+        source: root.source
+    Label:
+        color: app.theme_cls.text_color
+        text: str(root.num)
+
+<AssetCard>:
+    padding: dp(10), 0, dp(10), 0
+    size_hint: 0.9, None
+    height: dp(80)
+    ripple_behavior: True
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint: None, None
+        adaptive_height: True
+        width: dp(100)
+        pos_hint: {'top': 0.99}
+        MDLabel:
+            text: root.game_set.name
+            pos_hint: {'center_y': 0.5}
+            size_hint: None, None
+            valign: 'top'
+            size: root.width, dp(30)
+            font_size: sp(18)
+
+        MDLabel:
+            text: str(root.game_set.grid['cols']) + "x" + str(root.game_set.grid['rows'])
+            pos_hint: {'center_y': 0.5}
+            size_hint: None, None
+            size: dp(80), dp(20)
+            font_size: sp(12)
+
+        MDLabel:
+            text: str(root.game_set.pieces_num) + " pieces"
+            pos_hint: {'center_y': 0.5}
+            size_hint: None, None
+            size: dp(80), dp(20)
+            font_size: sp(12)
+
+    ScrollView:
+        pos_hint: {'bottom': 1}
+        size_hint: 1, None
+        height: dp(50)
+        bar_color: 0,0,0,0
+        MDBoxLayout:
+            id: pieces_display
+            size_hint: None, 1
+            left_padding: self.parent.width - (len(self.children) * dp(55))
+            padding: (self.left_padding if self.left_padding > 0 else 0), 0, 0, 0
+            adaptive_width: True
+            bar_inactive_color: 0,0,0,0
+            spacing: dp(5)
+
+
+<ThemesAssets>:
+    ScrollView:
+        size_hint: 1, 1
+        MDGridLayout:
+            id: sets
+            size_hint: 1, None
+            cols: 1
+            padding: dp(10),0,dp(10),0
+            adaptive_height: True
+            spacing: dp(5)
+            pos_hint: {'center_x': 0.5}
+
+            MDBoxLayout:
+                size_hint: 1, None
+                height: dp(50)
+                spacing: dp(10)
+                MDLabel:
+                    text: "Game Sets"
+                    font_size: sp(20)
+                MDRoundFlatButton:
+                    text: 'NEW SET'
+                    pos_hint: {'center_y': 0.5}
+                    on_release:
+                        app.root.new_game_set()
+
+                MDRoundFlatButton:
+                    text: 'back'
+                    pos_hint: {'center_y': 0.5}
+                    on_release:
+                        app.root.current = 'welcome_screen'

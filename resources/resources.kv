@@ -1,0 +1,132 @@
+<ResourcesScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+        padding: dp(5)
+        MDBoxLayout:
+            size_hint: 1, None
+            height: dp(50)
+            spacing: dp(10)
+            x: dp(5)
+            top: root.top - dp(5)
+            MDRoundFlatButton:
+                text: 'back'
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    root.save()
+                    app.root.current = 'new_game'
+            MDLabel:
+                text: "Resources"
+                font_size: sp(20)
+
+        ScrollView:
+            size_hint: 1, 1
+            MDGridLayout:
+                cols: 1
+                spacing: dp(5)
+                size_hint: 1, None
+                adaptive_height: True
+                # Pieces Source Card
+                MDCard:
+                    id: pieces_card
+                    padding: dp(10)
+                    size_hint: 1, None
+                    height: dp(100)
+                    ripple_behavior: True
+                    on_release: root.pieces_menu.open()
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDLabel:
+                            text: 'Pieces Source'
+                        MDLabel:
+                            id: pieces_path
+                            font_name: "kivymd/fonts/Roboto-Thin.ttf"
+                            text: "assets/game_sets/default/pieces"
+                            size_hint: None, None
+                            size: root.width - dp(30), dp(30)
+                            shorten: True
+                            shorten_from: "right"
+
+
+                # Pieces Card
+                MDCard:
+                    size_hint: 1, None
+                    height: dp(150)
+                    ripple_behavior: True
+                    on_release: root.pieces_menu.open()
+                    ScrollView:
+                        pos_hint: {'top': 1}
+                        size_hint: 1, 1
+                        bar_color: 0,0,0,0
+                        bar_inactive_color: 0,0,0,0
+                        MDBoxLayout:
+                            id: pieces_display
+                            size_hint: None, 1
+                            side_padding: (self.parent.width - (len(self.children) * dp(55))) / 2
+                            padding: (self.side_padding if self.side_padding > 0 else 0), 0, (self.side_padding if self.side_padding > 0 else 0), 0
+                            adaptive_width: True
+                            spacing: dp(5)
+
+
+                # Background Card
+                MDCard:
+                    id: background_card
+                    padding: dp(10)
+                    size_hint: 1, None
+                    height: dp(100)
+                    ripple_behavior: True
+                    background: background_path.text
+                    md_bg_color: 1,1,1,(0.5 if background_path.text else 0)
+                    on_release: root.background_menu.open()
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDLabel:
+                            text: 'Background'
+                        MDLabel:
+                            id: background_path
+                            font_name: "kivymd/fonts/Roboto-Thin.ttf"
+                            text: "assets/game_sets/default/backgrounds/background.png"
+                            shorten: True
+                            shorten_from: "right"
+                    Image:
+                        size_hint: None, 1
+                        width: self.height
+                        source: background_path.text
+
+
+                # Grid Background Card
+                MDCard:
+                    id: grid_background_card
+                    padding: dp(10)
+                    size_hint: 1, None
+                    height: dp(100)
+                    ripple_behavior: True
+                    background: grid_background_path.text
+                    md_bg_color: 1,1,1,(0.5 if grid_background_path.text else 0)
+                    on_release: root.grid_background_menu.open()
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDLabel:
+                            text: 'Grid Background'
+                        MDLabel:
+                            id: grid_background_path
+                            font_name: "kivymd/fonts/Roboto-Thin.ttf"
+                            text: "assets/game_sets/default/backgrounds/grid-background.png"
+                            shorten: True
+                            shorten_from: "right"
+                    Image:
+                        size_hint: None, 1
+                        width: self.height
+                        source: grid_background_path.text
+
+
+                # Help
+                MDTextField:
+                    id: help
+                    size_hint: 1, None
+                    size: root.width, dp(100)
+                    pos_hint: {'center_x': 0.5}
+                    mode: 'rectangle'
+                    multiline: True
+                    hint_text: 'Help'
+                    line_color_normal: self.theme_cls.primary_color

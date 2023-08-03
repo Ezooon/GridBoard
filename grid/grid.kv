@@ -1,0 +1,37 @@
+<Grid>:
+    MDGridLayout:
+        id: grid
+        size_hint: 1, 1
+        cols: root.cols
+        rows: root.rows
+        spacing: dp(4)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        canvas.before:
+            Color:
+                rgba: [1,1,1,1] if root.background else [0,0,0,0]
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                source: root.source
+
+            Color:
+                rgba: root.line_color if root.outline else (0,0,0,0)
+            Line:
+                width: dp(2)
+                rounded_rectangle:
+                    self.x, self.y, self.width, self.height, dp(10)
+
+
+<Cell>:
+    md_bg_color: 1, 1, 1, 1
+    on_release:
+        print(self.index)
+
+<Separator>:
+#    color: 0,0,0,0
+#    Image:
+#        source: "assets/game_sets/neon/sticks/v.PNG" if root.orientation == 'vertical' else "assets/game_sets/neon/sticks/h.PNG"
+#        allow_stretch: True
+#        keep_ratio: False
+

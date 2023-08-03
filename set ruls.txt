@@ -1,0 +1,30 @@
+-root directory with the game name.
+	-"pieces" directory with an image for each piece.
+	-"backgrounds" directory containing "background.png" and "grid-background.png"
+	-a help.txt file to explain the game maybe credit the used art.
+	-an init.json with the pieces initial number and positions, the size of the grid and other settings.
+		example: {
+                "grid": {
+                    "cols": 3,
+                    "rows": 3,
+                    "border": true,
+                    "background": false,
+                    "line_color": [
+                        255.0,
+                        255.0,
+                        255.0,
+                        235.48469387755102
+                    ],
+                    "size": [
+                        350.0,
+                        350.0
+                    ]
+                },
+                "dies": [
+                    0,
+                    []
+                ],
+                "pieces": {
+                    {pawn: [8, [[x,y],[x,y],[x,y],...]],...}
+                    }
+                }

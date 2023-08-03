@@ -1,0 +1,176 @@
+#:import Cell grid.Cell
+#:import Grid grid.Grid
+
+<TextSlider@MDBoxLayout>:
+    size_hint: 1, None
+    height: dp(40)
+    text: ''
+    value: tslide.value
+    color: app.theme_cls.primary_light
+    active: tslide.active
+    min: 1
+    max: 10
+    MDLabel:
+        text: root.text
+        size_hint: None, 1
+        width: dp(100)
+    MDSlider:
+        id: tslide
+        min: root.min
+        value: root.value
+        max: root.max
+        color: root.color
+        size_hint: 1, 1
+        height: dp(20)
+        show_off: False
+
+
+<GridSetup>:
+    MDRectangleFlatButton:
+        pos: dp(10), root.height - (dp(10) + self.height)
+        text: 'Done'
+        on_release:
+            root.save()
+            app.root.current = 'new_game'
+
+#    MDRectangleFlatButton:
+#        pos: dp(10), root.height - (dp(15) + (self.height*2))
+#        text: 'Reset'
+#        on_release:
+#            grid.set(app.root.editing_set)
+
+    Grid:
+        id: grid
+        spacing: dp(1)
+        size_hint: None, None
+        background: background_.active
+        cols: int(colslider.value or 1)
+        rows: int(rowslider.value)
+        outline: outline.active
+        line_color: app.theme_cls.text_color if text_.active else [red.value/255, green.value/255, blue.value/255, alpha.value/255]
+        pos_hint: {'center_x': 0.5, 'top': 0.99}
+
+    ScrollView:
+        scroll_timeout: 100
+        scroll_type: ['bars']
+        bar_width: dp(10)
+        size_hint: 0.9, 0.3
+        pos_hint: {'center_x': 0.5}
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, None
+            width: grid.width
+            adaptive_height: True
+            spacing: dp(10)
+
+            MDBoxLayout:
+                size_hint: 1, None
+                height: dp(40)
+                MDCheckbox:
+                    id: text_
+                    active: False
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                MDLabel:
+                    text: 'Default Color'
+                    size_hint: 1, 1
+
+                MDCheckbox:
+                    id: background_
+                    active: False
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                MDLabel:
+                    text: 'Background'
+                    size_hint: 1, 1
+
+            TextSlider:
+                id: red
+                text: 'Red'
+                min: 0
+                max: 255
+                color: [self.value/255, 0, 0, 1]
+
+            TextSlider:
+                id: green
+                text: 'Green'
+                min: 0
+                max: 255
+                color: [0, self.value/255, 0, 1]
+
+            TextSlider:
+                id: blue
+                text: 'Blue'
+                min: 0
+                max: 255
+                color: [0, 0, self.value/255, 1]
+
+            TextSlider:
+                id: alpha
+                text: 'Alpha'
+                value: 255
+                min: 0
+                max: 255
+                color: grid.line_color[:3] + [self.value/255]
+
+            MDBoxLayout:
+                size_hint: 1, None
+                height: dp(40)
+                MDCheckbox:
+                    id: square
+                    active: True
+                    top: rowslider.y
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                MDLabel:
+                    text: 'Square'
+                    size_hint: 1, 1
+
+            TextSlider:
+                id: width
+                text: 'Width'
+                min: dp(100)
+                max: root.width
+                on_active:
+                    grid.source = "" if self.active else root.source
+                    grid.background = False if self.active else background_.active
+                on_value:
+                    grid.width = self.value
+                    if square.active: grid.height = self.value
+
+            TextSlider:
+                id: height
+                text: 'Height'
+                min: dp(100)
+                height: 0 if square.active else dp(40)
+                opacity: 0 if square.active else 1
+                disabled: square.active
+                max: root.width
+                on_active:
+                    grid.source = "" if self.active else root.source
+                    grid.background = False if self.active else background_.active
+                on_value:
+                    grid.height = self.value
+
+            MDBoxLayout:
+                size_hint: 1, None
+                size: dp(40), dp(40)
+                MDCheckbox:
+                    id: outline
+                    active: True
+                    top: rowslider.y
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                MDLabel:
+                    text: 'Border'
+                    size_hint: 1, 1
+
+            TextSlider:
+                id: colslider
+                text: 'Columns'
+                max: 15
+
+            TextSlider:
+                id: rowslider
+                text: 'Rows'
+                max: 15
