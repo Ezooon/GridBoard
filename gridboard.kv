@@ -111,14 +111,17 @@
     MDScreen:
         name: "credit"
         MDIconButton:
-            icon: "arrow-left"
+            icon: "arrow-right"
             top: root.top - dp(10)
-            x: dp(10)
+            right: root.width - dp(10)
             on_release:
                 app.root.current = 'welcome_screen'
         ScrollView:
             size_hint: 1, 1
             Label:
+                markup: True
                 size_hint: None, None
                 size: self.texture_size
                 text: root.credit
+                on_ref_press:
+                    print(args)

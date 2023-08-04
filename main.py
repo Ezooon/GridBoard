@@ -11,7 +11,6 @@ from game_set import GameSet
 environ["KIVY_ORIENTATION"] = "portrait"
 
 root_path = path.expanduser('~')
-print("@"*100, root_path, "@"*100)
 games_path = path.join(root_path, 'Documents', 'GridBord')
 if platform == 'android':
     from android.permissions import request_permissions, Permission
@@ -24,7 +23,7 @@ credit = """
 Developer:
     GridBoard by Ezooon licensed MIT: game githup page
     email: mreisevil@gmail.com, EZ000N@outlook.com
-    githup: https://github.com/Ezooon
+    githup: [ref=https://github.com/Ezooon][u]https://github.com/Ezooon[/u][/ref]
     linkedin: https://www.linkedin.com/in/ezooon/
     
 
