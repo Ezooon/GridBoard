@@ -7,6 +7,7 @@ from kivy.properties import ObjectProperty, ListProperty, BooleanProperty
 from kivy.utils import platform
 from kivymd.app import MDApp
 from game_set import GameSet
+import webbrowser
 
 environ["KIVY_ORIENTATION"] = "portrait"
 
@@ -21,30 +22,30 @@ if platform == 'android':
     Window.softinput_mode = 'below_target'
 credit = """
 Developer:
-    GridBoard by Ezooon licensed MIT: game githup page
+    GridBoard by Ezooon licensed MIT: [ref=https://github.com/Ezooon/GridBoard][u]https://github.com/Ezooon/GridBoard[/u][/ref]
     email: mreisevil@gmail.com, EZ000N@outlook.com
     githup: [ref=https://github.com/Ezooon][u]https://github.com/Ezooon[/u][/ref]
-    linkedin: https://www.linkedin.com/in/ezooon/
+    linkedin: [ref=https://www.linkedin.com/in/ezooon/][u]https://www.linkedin.com/in/ezooon/[/u][/ref]
     
 
 Chess Board:
-    "Simple Checkerboard" by greysondn licensed CC0: https://opengameart.org/content/simple-checkerboard
+    "Simple Checkerboard" by greysondn licensed CC0: [ref=https://opengameart.org/content/simple-checkerboard][u]https://opengameart.org/content/simple-checkerboard[/u][/ref]
     
 Chess Pieces:
-    "Chess Pieces and Board Squares" by JohnPablok Licenced CC-BY-SA 3.0: https://opengameart.org/content/chess-pieces-and-board-squares
+    "Chess Pieces and Board Squares" by JohnPablok Licenced CC-BY-SA 3.0: [ref=https://opengameart.org/content/chess-pieces-and-board-squares][u]https://opengameart.org/content/chess-pieces-and-board-squares[/u][/ref]
     >> i changed the orientation of the white pieces.
     
 Ludo:
-    "Ludo" by khurs10101 licensed CC-BY 4.0: https://opengameart.org/content/ludo
+    "Ludo" by khurs10101 licensed CC-BY 4.0: [ref=https://opengameart.org/content/ludo][u]https://opengameart.org/content/ludo[/u][/ref]
 
 Application Background:
-    "Ruind City Background" by TokyoGeisha licensed CC0: https://opengameart.org/content/ruined-city-background
+    "Ruind City Background" by TokyoGeisha licensed CC0: [ref=https://opengameart.org/content/ruined-city-background][u]https://opengameart.org/content/ruined-city-background[/u][/ref]
 
 Default Grid Background:
-    "Bamboo Wood Seamless 1k" by YCbCr licenced CC0: https://opengameart.org/content/bamboo-wood-seamless-1k
+    "Bamboo Wood Seamless 1k" by YCbCr licenced CC0: [ref=https://opengameart.org/content/bamboo-wood-seamless-1k][u]https://opengameart.org/content/bamboo-wood-seamless-1k[/u][/ref]
     
 Default Pieces:
-    "Neon Sticks" by ki2kid licenced CC-BY 4.0: https://opengameart.org/content/neon-sticks
+    "Neon Sticks" by ki2kid licenced CC-BY 4.0: [ref=https://opengameart.org/content/neon-sticks][u]https://opengameart.org/content/neon-sticks[/u][/ref]
     >> i used the nodes to make new pieces by changing the color
 """
 
@@ -106,6 +107,9 @@ class Game(MDScreenManager):
             self.new = False
             self.game_sets = []
             self.get_game_sets()
+
+    def open_url(self, url):
+        webbrowser.open(url)
 
 
 class GridBoard(MDApp):
