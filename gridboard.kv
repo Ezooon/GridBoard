@@ -3,7 +3,6 @@
 #:import ResourcesScreen resources.ResourcesScreen
 #:import GameScreen game_screen.GameScreen
 #:import Die die.Die
-#:import randint random.randint
 
 <Game>:
     canvas.before:
@@ -18,7 +17,7 @@
         name: "welcome_screen"
         Die:
             size: dp(100), dp(100)
-            pos: randint(0, root.width-dp(100)), randint(0, root.height-dp(100))
+            pos: dp(100), dp(100)
             on_face:
                 if self.face == 6: root.current = "credit"
 
@@ -110,12 +109,6 @@
 
     MDScreen:
         name: "credit"
-        MDIconButton:
-            icon: "arrow-right"
-            top: root.top - dp(10)
-            right: root.width - dp(10)
-            on_release:
-                app.root.current = 'welcome_screen'
         ScrollView:
             size_hint: 1, 1
             Label:
@@ -124,4 +117,10 @@
                 size: self.texture_size
                 text: root.credit
                 on_ref_press:
-                    print(args)
+                    root.open_url(args[1])
+        MDIconButton:
+            icon: "arrow-right"
+            top: root.top - dp(10)
+            right: root.width - dp(10)
+            on_release:
+                app.root.current = 'welcome_screen'
