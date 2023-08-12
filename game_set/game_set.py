@@ -67,7 +67,8 @@ class GameSet:
                 "border": True,
                 "background": False,
                 "line_color": [255, 255, 255, 255],
-                "size": [100, 100]
+                "size": [100, 100],
+                "click": True
             },
             "dies": [0, []],
             "pieces": {}
@@ -95,7 +96,10 @@ class GameSet:
         if self._pieces_path:
             for piece in listdir(self._pieces_path):
                 if piece not in self.pieces:
-                    self.pieces[piece] = {'num': 0, 'poses': []}
+                    self.pieces[piece] = {
+                        'num': 0, 'poses': [], "color": [1, 1, 1, 1],
+                        "auto_size": True, "size": [10, 10], "rotation": 0
+                    }
                 self.pieces[piece]['path'] = path.join(self._pieces_path, piece)
                 self.pieces_num += self.pieces[piece]['num']
 

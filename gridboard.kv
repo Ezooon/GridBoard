@@ -1,6 +1,7 @@
 #:import GridSetup grid_setup.GridSetup
 #:import ThemesAssets themes_assets.ThemesAssets
 #:import ResourcesScreen resources.ResourcesScreen
+#:import PiecesScreen pieces.PiecesScreen
 #:import GameScreen game_screen.GameScreen
 #:import Die die.Die
 
@@ -59,10 +60,11 @@
                 font_size: sp(18)
                 on_release:
                     root.current = 'grid_setup'
-            Widget:
-#            MDRectangleFlatButton:
-#                text: 'Coming Soon' # ToDo more settings for the pieces
-#                font_size: sp(18)
+            MDRectangleFlatButton:
+                text: 'Pieces'
+                font_size: sp(18)
+                on_release:
+                    root.current = 'pieces_screen'
             MDRectangleFlatButton:
                 text: 'Start Positioning'
                 font_size: sp(18)
@@ -105,6 +107,10 @@
 
     ResourcesScreen:
         name: 'resources'
+        back_click_to: 'new_game'
+
+    PiecesScreen:
+        name: 'pieces_screen'
         back_click_to: 'new_game'
 
     MDScreen:

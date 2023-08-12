@@ -48,5 +48,6 @@ class GridSetup(MDScreen):
             "border": True,
             "background": grid.background,
             "line_color": [c * 255 for c in line_color],
-            "size": [x/d, y/d]
+            "size": [x/d, y/d],
+            "click": grid.click
         }

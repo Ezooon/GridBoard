@@ -10,6 +10,10 @@ from kivy.metrics import dp
 Builder.load_file("grid/grid.kv")
 
 
+def collide(box, x, y):
+    return box[0] <= x <= box[2] and box[1] <= y <= box[3]
+
+
 class Grid(FloatLayout):
     outline = BooleanProperty(True)
     cols = NumericProperty(1)
@@ -18,7 +22,9 @@ class Grid(FloatLayout):
     rows_separators = ListProperty([])
     cols_separators = ListProperty([])
     line_color = ListProperty([0, 0, 0, 1])
+    cells = ListProperty([])
     source = StringProperty("")
+    click = BooleanProperty(True)
 
     def on_rows(self, _, rows):
         row_height = self.height / rows
@@ -31,6 +37,8 @@ class Grid(FloatLayout):
             self.add_widget(sep)
             sep.height = dp(3)
 
+        self.update_cells()
+
     def on_cols(self, _, cols):
         col_width = self.width / cols
         self.clear_widgets(self.cols_separators)
@@ -41,6 +49,27 @@ class Grid(FloatLayout):
             self.cols_separators.append(sep)
             self.add_widget(sep)
             sep.width = dp(3)
+
+        self.update_cells()
+
+    def update_cells(self):
+        xs = [self.x] + [col.x for col in self.cols_separators] + [self.right]
+        ys = [self.y] + [row.y for row in self.rows_separators] + [self.top]
+        cells = []
+        for c in range(self.cols):
+            cells.append([])
+            for r in range(self.rows):
+                cells[c].append([xs[c], ys[r], xs[c+1], ys[r+1]])
+        self.cells = cells
+
+    def collide_cell(self, x, y):
+        if not self.click:
+            return None  # [[-1, -1], [x, y, x, y], [x, y]]
+        for c in range(self.cols):
+            for r in range(self.rows):
+                box = self.cells[c][r]
+                if collide(box, x, y):
+                    return [c, r], box, [box[0] + ((box[2] - box[0])/2), box[1] + ((box[3] - box[1])/2)]
 
     def on_pos(self, _, value):
         self.on_rows(_, self.rows)
@@ -61,6 +90,7 @@ class Grid(FloatLayout):
         w, h = set_grid["size"]
         self.size = dp(w), dp(h)
         self.source = game_set.grid_background
+        self.click = set_grid["click"]
 
 
 class Cell(ButtonBehavior, MDAnchorLayout):

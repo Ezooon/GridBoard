@@ -15,39 +15,15 @@ root_path = path.expanduser('~')
 games_path = path.join(root_path, 'Documents', 'GridBord')
 if platform == 'android':
     from android.permissions import request_permissions, Permission
+    request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
     from android.storage import primary_external_storage_path
 
     root_path = primary_external_storage_path()
     games_path = path.join(root_path, 'GridBord')
     Window.softinput_mode = 'below_target'
-credit = """
-Developer:
-    GridBoard by Ezooon licensed MIT: [ref=https://github.com/Ezooon/GridBoard][u]https://github.com/Ezooon/GridBoard[/u][/ref]
-    email: mreisevil@gmail.com, EZ000N@outlook.com
-    githup: [ref=https://github.com/Ezooon][u]https://github.com/Ezooon[/u][/ref]
-    linkedin: [ref=https://www.linkedin.com/in/ezooon/][u]https://www.linkedin.com/in/ezooon/[/u][/ref]
-    
 
-Chess Board:
-    "Simple Checkerboard" by greysondn licensed CC0: [ref=https://opengameart.org/content/simple-checkerboard][u]https://opengameart.org/content/simple-checkerboard[/u][/ref]
-    
-Chess Pieces:
-    "Chess Pieces and Board Squares" by JohnPablok Licenced CC-BY-SA 3.0: [ref=https://opengameart.org/content/chess-pieces-and-board-squares][u]https://opengameart.org/content/chess-pieces-and-board-squares[/u][/ref]
-    >> i changed the orientation of the white pieces.
-    
-Ludo:
-    "Ludo" by khurs10101 licensed CC-BY 4.0: [ref=https://opengameart.org/content/ludo][u]https://opengameart.org/content/ludo[/u][/ref]
-
-Application Background:
-    "Ruind City Background" by TokyoGeisha licensed CC0: [ref=https://opengameart.org/content/ruined-city-background][u]https://opengameart.org/content/ruined-city-background[/u][/ref]
-
-Default Grid Background:
-    "Bamboo Wood Seamless 1k" by YCbCr licenced CC0: [ref=https://opengameart.org/content/bamboo-wood-seamless-1k][u]https://opengameart.org/content/bamboo-wood-seamless-1k[/u][/ref]
-    
-Default Pieces:
-    "Neon Sticks" by ki2kid licenced CC-BY 4.0: [ref=https://opengameart.org/content/neon-sticks][u]https://opengameart.org/content/neon-sticks[/u][/ref]
-    >> i used the nodes to make new pieces by changing the color
-"""
+with open('Cridit.txt', 'r') as f:
+    credit = f.read()
 
 
 class Game(MDScreenManager):
@@ -80,6 +56,11 @@ class Game(MDScreenManager):
         for game_set in sets:
             self.game_sets.append(GameSet(name=game_set))
 
+        # TO MAKE CHANGES TO ALL GAME SETS UNCOMMENT
+        # for gset in self.game_sets:
+        #     gset.grid["click"] = True
+        #     gset.save()
+
     def on_editing_set(self, _, editing_set):
         self.ids.editing_set_text_field.text = editing_set.name
 
@@ -111,19 +92,30 @@ class Game(MDScreenManager):
     def open_url(self, url):
         webbrowser.open(url)
 
+    def on_game_set(self, _, value):
+        MDApp.get_running_app().save_confs()
+
 
 class GridBoard(MDApp):
-    def build(self):
-        if platform == 'android':
-            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+    def build_config(self, config):
+        config.setdefaults('Confs', {'game_set': ''})
 
-#        self.icon = 'logo.ico'
+    def build(self):
         self.theme_cls.theme_style = "Dark"
         colors = ['Pink', 'Indigo', 'Blue',
                   'LightBlue', 'Cyan', 'Teal', 'Green', 'LightGreen', 'Amber', 'Orange', 'DeepOrange',
                   'BlueGray']
         self.theme_cls.primary_palette = colors[randint(0, len(colors) - 1)]
+        game_set_name = self.config.get('Confs', 'game_set')
+        if game_set_name:
+            return Game(game_set=GameSet(name=game_set_name))
         return Game()
+
+    def save_confs(self):
+        config = self.config
+        if self.root:
+            config.set('Confs', 'game_set', self.root.game_set.name)
+        config.write()
 
 
 if __name__ == '__main__':

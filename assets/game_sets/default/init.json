@@ -13,7 +13,8 @@
         "size": [
             350.0,
             350.0
-        ]
+        ],
+        "click": true
     },
     "dies": [
         0,
@@ -37,6 +38,22 @@
             "poses": []
         },
         "white.png": {
+            "num": 0,
+            "poses": []
+        },
+        "Layer 2(pasted).PNG": {
+            "num": 0,
+            "poses": []
+        },
+        "Layer 3(pasted).PNG": {
+            "num": 0,
+            "poses": []
+        },
+        "Layer 4(pasted).PNG": {
+            "num": 0,
+            "poses": []
+        },
+        "Layer 5(pasted).PNG": {
             "num": 0,
             "poses": []
         }

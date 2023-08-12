@@ -4,7 +4,7 @@
 title = Grid Board
 
 # (str) Package name
-package.name = gridboardgame
+package.name = org.grid.board.ezooon
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.grid.board.ezooon
@@ -93,7 +93,7 @@ android.presplash_color = #102D20
 #icon.adaptive_background.filename = %(source.dir)s/data/icon_bg.png
 
 # (list) Permissions
-android.permissions = INTERNET, ACCESS_NETWORK_STATE, MANAGE_EXTERNAL_STORAGE
+android.permissions = MANAGE_EXTERNAL_STORAGE
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 

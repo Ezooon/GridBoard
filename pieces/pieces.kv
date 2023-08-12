@@ -1,0 +1,203 @@
+<PiecesScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 1
+        padding: dp(5)
+        MDBoxLayout:
+            size_hint: 1, None
+            height: dp(50)
+            spacing: dp(10)
+            x: dp(5)
+            top: root.top - dp(5)
+            MDRoundFlatButton:
+                text: 'back'
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    root.save()
+                    app.root.current = 'new_game'
+            MDLabel:
+                text: "Resources"
+                font_size: sp(20)
+
+        MDGridLayout:
+            cols: 1
+            spacing: dp(5)
+            size_hint: 1, None
+            adaptive_height: True
+            # Pieces Source Card
+            MDCard:
+                id: pieces_card
+                padding: dp(10)
+                size_hint: 1, None
+                height: dp(100)
+                ripple_behavior: True
+                on_release: root.pieces_menu.open()
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDLabel:
+                        text: 'Pieces Source'
+                    MDLabel:
+                        id: pieces_path
+                        font_name: "kivymd/fonts/Roboto-Thin.ttf"
+                        text: "assets/game_sets/default/pieces"
+                        size_hint: None, None
+                        size: root.width - dp(30), dp(30)
+                        shorten: True
+                        shorten_from: "right"
+
+
+            # Pieces Card
+            MDCard:
+                size_hint: 1, None
+                height: dp(160)
+                ScrollView:
+                    pos_hint: {'top': 1}
+                    size_hint: 1, 1
+                    bar_color: 0,0,0,0
+                    bar_inactive_color: 0,0,0,0
+                    MDBoxLayout:
+                        id: pieces_display
+                        size_hint: None, 1
+                        side_padding: (self.parent.width - (len(self.children) * dp(55))) / 2
+                        padding: (self.side_padding if self.side_padding > 0 else 0), 0, (self.side_padding if self.side_padding > 0 else 0), 0
+                        adaptive_width: True
+                        spacing: dp(5)
+
+        ScrollView:
+            scroll_timeout: 100
+            scroll_type: ['bars']
+            bar_width: dp(10)
+            size_hint: 1, 0.3
+            pos_hint: {'center_x': 0.5}
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, None
+                adaptive_height: True
+                spacing: dp(10)
+
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: dp(40)
+                    MDCheckbox:
+                        id: auto_size
+                        active: True
+                        size_hint: None, None
+                        size: dp(40), dp(40)
+                        on_active:
+                            if self.active: root.target_piece.p_size = dp(100), dp(100)
+                            root.target_piece.auto_size = self.active
+                    MDLabel:
+                        text: 'Fit Grid Cells'
+                        size_hint: 1, 1
+
+                TextSlider:
+                    id: size
+                    text: 'Size'
+                    disabled: auto_size.active
+                    min: dp(5)
+                    max: dp(100)
+                    on_value:
+                        root.target_piece.p_size = [self.value] * 2
+
+                TextSlider:
+                    id: rotation
+                    text: 'Rotation'
+                    max: 360
+                    min: 0
+                    on_value:
+                        root.target_piece.p_rotation = self.value
+
+                TextSlider:
+                    id: red
+                    text: 'Red'
+                    min: 0
+                    max: 255
+                    color: [self.value/255, 0, 0, 1]
+                    value: 255
+                    on_value:
+                        root.target_piece.p_color[0] = self.value/255
+
+                TextSlider:
+                    id: green
+                    text: 'Green'
+                    min: 0
+                    max: 255
+                    color: [0, self.value/255, 0, 1]
+                    value: 255
+                    on_value:
+                        root.target_piece.p_color[1] = self.value/255
+
+                TextSlider:
+                    id: blue
+                    text: 'Blue'
+                    min: 0
+                    max: 255
+                    color: [0, 0, self.value/255, 1]
+                    value: 255
+                    on_value:
+                        root.target_piece.p_color[2] = self.value/255
+
+                TextSlider:
+                    id: alpha
+                    text: 'Alpha'
+                    min: 0
+                    max: 255
+                    color: root.target_piece.p_color[:3] + [self.value/255]
+                    value: 255
+                    on_value:
+                        root.target_piece.p_color[3] = self.value/255
+
+<APieceAdder>:
+    size_hint: None, 0.9
+    pos_hint: {'center_y': 0.5}
+    width: dp(100)
+    canvas.before:
+        Color:
+            rgba: app.theme_cls.primary_dark if root.target else [0, 0, 0, 0]
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [dp(10)]
+
+        Color:
+            rgba: app.theme_cls.primary_color
+        Line:
+            width: dp(1)
+            rounded_rectangle:
+                self.x, self.y, self.width, self.height, dp(10), 100
+    MDBoxLayout:
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        orientation: "vertical"
+        size_hint: 1, 1
+        Image:
+            id: img
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            source: root.source
+            size_hint: None, None
+            size: root.p_size
+            color: root.p_color
+            canvas.before:
+                PushMatrix
+                Rotate:
+                    angle: root.p_rotation
+                    axis: 0, 0, 1
+                    origin: self.center
+            canvas.after:
+                PopMatrix
+        MDBoxLayout:
+            size_hint: 1, None
+            pos_hint: {'center_x': 0.5}
+            height: dp(48)
+            MDIconButton:
+                icon: 'plus'
+                on_press:
+                    root.num += 1
+            Label:
+                color: app.theme_cls.text_color
+                text: str(root.num)
+                size: dp(40), dp(40)
+            MDIconButton:
+                icon: 'minus'
+                on_press:
+                    root.num -= 1
