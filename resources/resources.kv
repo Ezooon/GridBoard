@@ -26,48 +26,6 @@
                 spacing: dp(5)
                 size_hint: 1, None
                 adaptive_height: True
-                # Pieces Source Card
-                MDCard:
-                    id: pieces_card
-                    padding: dp(10)
-                    size_hint: 1, None
-                    height: dp(100)
-                    ripple_behavior: True
-                    on_release: root.pieces_menu.open()
-                    BoxLayout:
-                        orientation: 'vertical'
-                        MDLabel:
-                            text: 'Pieces Source'
-                        MDLabel:
-                            id: pieces_path
-                            font_name: "kivymd/fonts/Roboto-Thin.ttf"
-                            text: "assets/game_sets/default/pieces"
-                            size_hint: None, None
-                            size: root.width - dp(30), dp(30)
-                            shorten: True
-                            shorten_from: "right"
-
-
-                # Pieces Card
-                MDCard:
-                    size_hint: 1, None
-                    height: dp(150)
-                    ripple_behavior: True
-                    on_release: root.pieces_menu.open()
-                    ScrollView:
-                        pos_hint: {'top': 1}
-                        size_hint: 1, 1
-                        bar_color: 0,0,0,0
-                        bar_inactive_color: 0,0,0,0
-                        MDBoxLayout:
-                            id: pieces_display
-                            size_hint: None, 1
-                            side_padding: (self.parent.width - (len(self.children) * dp(55))) / 2
-                            padding: (self.side_padding if self.side_padding > 0 else 0), 0, (self.side_padding if self.side_padding > 0 else 0), 0
-                            adaptive_width: True
-                            spacing: dp(5)
-
-
                 # Background Card
                 MDCard:
                     id: background_card
