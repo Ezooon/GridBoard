@@ -128,13 +128,13 @@
 
             TextSlider:
                 id: width
-                text: 'Width'
+                text: 'Width' if not square.active else "Size"
                 min: dp(100)
                 max: root.width
+#                on_active:
+#                    grid.source = "" if self.active else root.source
+#                    grid.background = False if self.active else background_.active
                 on_active:
-                    grid.source = "" if self.active else root.source
-                    grid.background = False if self.active else background_.active
-                on_value:
                     grid.width = self.value
                     if square.active: grid.height = self.value
 
@@ -146,10 +146,10 @@
                 opacity: 0 if square.active else 1
                 disabled: square.active
                 max: root.width
+#                on_active:
+#                    grid.source = "" if self.active else root.source
+#                    grid.background = False if self.active else background_.active
                 on_active:
-                    grid.source = "" if self.active else root.source
-                    grid.background = False if self.active else background_.active
-                on_value:
                     grid.height = self.value
 
             MDBoxLayout:

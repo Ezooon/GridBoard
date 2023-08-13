@@ -159,6 +159,7 @@ class PiecesScreen(MDScreen):
             if p.name == 'die':
                 editing_set.dies[0] = p.num
                 continue
+            editing_set.pieces[p.name]["num"] = p.num
             editing_set.pieces[p.name]["auto_size"] = p.auto_size
             editing_set.pieces[p.name]["size"] = p.p_size
             editing_set.pieces[p.name]["rotation"] = p.p_rotation

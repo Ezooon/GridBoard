@@ -18,12 +18,11 @@ class GameScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.cell_size = None
+        self.grid = None
         self.log = []
 
     def on_enter(self):
-        Clock.schedule_once(self.setup, 0)
-
-    def setup(self, dt):
         if self.editing:
             game_set = App.get_running_app().root.editing_set
         else:
@@ -33,11 +32,14 @@ class GameScreen(MDScreen):
             self.background = game_set.background
             self.md_bg_color = 1, 1, 1, 1
 
-        grid = self.ids.grid
+        grid = self.grid = self.ids.grid
         grid.set(game_set)
-        cell_size = [grid.width / grid.cols, grid.height / grid.rows]
+        self.cell_size = [grid.width / grid.cols, grid.height / grid.rows]
 
-        piece_size = [min(cell_size) - dp(6)] * 2
+        Clock.schedule_once(lambda x: self.setup(game_set), 0)
+
+    def setup(self, game_set):
+        piece_size = [min(self.cell_size) - dp(6)] * 2
         pieces = game_set.pieces
 
         self.clear_widgets(self.pieces + self.dies)
@@ -50,8 +52,12 @@ class GameScreen(MDScreen):
                 pos = [dp(10), dp(10)]
                 if i < len(piece['poses']):
                     pos = piece['poses'][i]
-                piexe = Piece(source=piece["path"],
-                              relative_pos=[dp(pos[0]), dp(pos[1])], size=piece_size, name=piece_key)
+                auto = piece["auto_size"]
+                piexe = Piece(
+                    source=piece["path"], relative_pos=[dp(pos[0]), dp(pos[1])],
+                    size=piece_size if auto else piece["size"],
+                    rotation=piece["rotation"], color=piece["color"],
+                    name=piece_key)
                 self.add_widget(piexe)
                 piexe.click_relative_pos()
                 self.pieces.append(piexe)
@@ -97,8 +103,7 @@ class GameScreen(MDScreen):
 
     def restart(self):
         root = App.get_running_app().root
-        root.game_set.__init__(root.game_set.name)
-        self.setup(0)
+        self.setup(root.game_set)
 
     def undo(self):
         if self.log:

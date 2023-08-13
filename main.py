@@ -1,3 +1,4 @@
+import os
 from os import listdir, path, makedirs, environ
 from random import randint
 from kivy.core.window import Window
@@ -22,8 +23,8 @@ if platform == 'android':
     games_path = path.join(root_path, 'GridBord')
     Window.softinput_mode = 'below_target'
 
-with open('Cridit.txt', 'r') as f:
-    credit = f.read()
+with open('Credit.txt', 'r') as f:
+    credit = f.read()  # Credit the die artest and the sound one too.
 
 
 class Game(MDScreenManager):
@@ -108,7 +109,10 @@ class GridBoard(MDApp):
         self.theme_cls.primary_palette = colors[randint(0, len(colors) - 1)]
         game_set_name = self.config.get('Confs', 'game_set')
         if game_set_name:
-            return Game(game_set=GameSet(name=game_set_name))
+            if game_set_name in os.listdir("assets/game_sets"):
+                return Game(game_set=GameSet(name=game_set_name))
+            elif game_set_name in os.listdir(games_path):
+                return Game(game_set=GameSet(name=game_set_name, external=True))
         return Game()
 
     def save_confs(self):

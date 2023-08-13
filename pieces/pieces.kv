@@ -48,19 +48,22 @@
 
             # Pieces Card
             MDCard:
+                id: pieces_card
                 size_hint: 1, None
-                height: dp(160)
+                height: pieces_display.height + dp(6)
+                padding: 0, dp(3), 0, dp(3)
                 ScrollView:
-                    pos_hint: {'top': 1}
                     size_hint: 1, 1
                     bar_color: 0,0,0,0
                     bar_inactive_color: 0,0,0,0
+                    do_scroll_y: False
+                    scroll_x: 0.5
                     MDBoxLayout:
                         id: pieces_display
-                        size_hint: None, 1
+                        size_hint: None, None
                         side_padding: (self.parent.width - (len(self.children) * dp(55))) / 2
                         padding: (self.side_padding if self.side_padding > 0 else 0), 0, (self.side_padding if self.side_padding > 0 else 0), 0
-                        adaptive_width: True
+                        adaptive_size: True
                         spacing: dp(5)
 
         ScrollView:
@@ -96,7 +99,7 @@
                     text: 'Size'
                     disabled: auto_size.active
                     min: dp(5)
-                    max: dp(100)
+                    max: dp(200)
                     on_value:
                         root.target_piece.p_size = [self.value] * 2
 
@@ -149,9 +152,10 @@
                         root.target_piece.p_color[3] = self.value/255
 
 <APieceAdder>:
-    size_hint: None, 0.9
+    size_hint: None, None
     pos_hint: {'center_y': 0.5}
-    width: dp(100)
+    width: pbox.width
+    height: pbox.height  #if pbox.height > dp(150) else dp(150)
     canvas.before:
         Color:
             rgba: app.theme_cls.primary_dark if root.target else [0, 0, 0, 0]
@@ -167,9 +171,11 @@
             rounded_rectangle:
                 self.x, self.y, self.width, self.height, dp(10), 100
     MDBoxLayout:
+        id: pbox
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         orientation: "vertical"
-        size_hint: 1, 1
+        size_hint: None, None
+        adaptive_size: True
         Image:
             id: img
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
@@ -177,16 +183,9 @@
             size_hint: None, None
             size: root.p_size
             color: root.p_color
-            canvas.before:
-                PushMatrix
-                Rotate:
-                    angle: root.p_rotation
-                    axis: 0, 0, 1
-                    origin: self.center
-            canvas.after:
-                PopMatrix
         MDBoxLayout:
-            size_hint: 1, None
+            size_hint: None, None
+            width: dp(100)
             pos_hint: {'center_x': 0.5}
             height: dp(48)
             MDIconButton:
