@@ -1,10 +1,11 @@
+import json
 import os
 from os import listdir, path, makedirs, environ
 from random import randint
 from kivy.core.window import Window
 from kivymd.toast import toast
 from kivymd.uix.screenmanager import MDScreenManager
-from kivy.properties import ObjectProperty, ListProperty, BooleanProperty
+from kivy.properties import ObjectProperty, ListProperty, BooleanProperty, DictProperty, StringProperty
 from kivy.utils import platform
 from kivymd.app import MDApp
 from game_set import GameSet
@@ -98,8 +99,31 @@ class Game(MDScreenManager):
 
 
 class GridBoard(MDApp):
+    lang_name = StringProperty("english")
+    lang = DictProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.languages = [lang[:-5] for lang in listdir("assets/lang")]
+
+        with open(f'assets/lang/{self.lang_name}.json', 'r', encoding="utf-8") as f:
+            self.lang = json.load(f)
+
+    def on_lang_name(self, _, name):
+        with open(f'assets/lang/{name}.json', 'r', encoding="utf-8") as f:
+            self.lang = json.load(f)
+        self.config.set('Confs', 'language', self.lang_name)
+        self.config.write()
+
+    def next_lang(self):
+        i = self.languages.index(self.lang_name)
+        if i + 1 >= len(self.languages):
+            self.lang_name = self.languages[0]
+            return
+        self.lang_name = self.languages[i+1]
+
     def build_config(self, config):
-        config.setdefaults('Confs', {'game_set': ''})
+        config.setdefaults('Confs', {'game_set': '', 'language': 'english'})
 
     def build(self):
         self.theme_cls.theme_style = "Dark"
@@ -107,6 +131,7 @@ class GridBoard(MDApp):
                   'LightBlue', 'Cyan', 'Teal', 'Green', 'LightGreen', 'Amber', 'Orange', 'DeepOrange',
                   'BlueGray']
         self.theme_cls.primary_palette = colors[randint(0, len(colors) - 1)]
+        self.lang_name = self.config.get('Confs', 'language')
         game_set_name = self.config.get('Confs', 'game_set')
         if game_set_name:
             if game_set_name in os.listdir("assets/game_sets"):
@@ -119,6 +144,7 @@ class GridBoard(MDApp):
         config = self.config
         if self.root:
             config.set('Confs', 'game_set', self.root.game_set.name)
+            config.set('Confs', 'language', self.lang_name)
         config.write()
 
 

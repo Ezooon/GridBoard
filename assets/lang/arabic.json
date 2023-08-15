@@ -1,0 +1,44 @@
+{
+  "PLAY": "إلعب",
+  "Choose Game": "إختر لعبة",
+
+  "Game Sets": "مجموعات الألعاب",
+  "NEW SET": "مجموعة جديدة",
+
+  "New Game Name": "إسم اللعبة الجديدة",
+  "Grid": "الشبكة",
+  "Pieces": "القطع",
+  "Positioning": "ترتيب القطع",
+  "Resources": "الموارد",
+  "Save": "حفظ",
+  "Cancel": "إلغاء",
+
+  "Done": "تم",
+  "back": "رجوع",
+  "Background": "الخلفية",
+
+  "Default Color": "اللون الإفترضي",
+  "Square": "مربع",
+  "Width": "العرض",
+  "Height": "الإرتفاع",
+  "Border": "حدود",
+  "Columns": "الأعمدة",
+  "Rows": "الصفوف",
+
+  "Red": "الأحمر",
+  "Green": "الأخضر",
+  "Blue": "الأزرق",
+  "Alpha": "ألفا",
+  "Size": "الحجم",
+
+  "Pieces Folder": "مجلد القطع",
+  "Fit Grid Cells": "تناسب حجم الخلية",
+  "Rotation": "الإلتفاف",
+
+  "Click": "داخل الخلية",
+
+  "Grid Background": "خلفية الشبكة",
+  "Help": "مساعدة",
+
+  "": ""
+}

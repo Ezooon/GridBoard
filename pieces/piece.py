@@ -88,3 +88,5 @@ class Piece(DragBehavior, Image):
         d = MetricsBase().density
         x, y = self.relative_pos
         return [x/d, y/d]
+
+# Todo add sounds on_touch_up

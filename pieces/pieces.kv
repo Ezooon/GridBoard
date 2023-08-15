@@ -10,13 +10,13 @@
             x: dp(5)
             top: root.top - dp(5)
             MDRoundFlatButton:
-                text: 'back'
+                text: app.lang['back']
                 pos_hint: {'center_y': 0.5}
                 on_release:
                     root.save()
                     app.root.current = 'new_game'
             MDLabel:
-                text: "Resources"
+                text: app.lang["Pieces"]
                 font_size: sp(20)
 
         MDGridLayout:
@@ -35,7 +35,7 @@
                 BoxLayout:
                     orientation: 'vertical'
                     MDLabel:
-                        text: 'Pieces Source'
+                        text: app.lang['Pieces Folder']
                     MDLabel:
                         id: pieces_path
                         font_name: "kivymd/fonts/Roboto-Thin.ttf"
@@ -91,7 +91,7 @@
                             if self.active: root.target_piece.p_size = dp(100), dp(100)
                             root.target_piece.auto_size = self.active
                     MDLabel:
-                        text: 'Fit Grid Cells'
+                        text: app.lang['Fit Grid Cells']
                         size_hint: 1, 1
 
                 TextSlider:

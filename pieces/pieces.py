@@ -26,7 +26,7 @@ class APieceAdder(ButtonBehavior, MDFloatLayout):
     source = StringProperty("assets/game_sets/default/pieces/red.png")
     num = NumericProperty(0)
     target = BooleanProperty(False)
-    auto_size = BooleanProperty(True)
+    auto_size = BooleanProperty(False)
     p_size = ListProperty([dp(80), dp(80)])
     p_rotation = NumericProperty(0)
     p_color = ListProperty([1, 1, 1, 1])
@@ -80,7 +80,18 @@ class PiecesScreen(MDScreen):
         layout = self.ids.pieces_display
         layout.clear_widgets()
         for piece in pieces.keys():
-            apa = APieceAdder(name=piece, source=pieces[piece]['path'], num=pieces[piece]['num'])
+            p = pieces[piece]
+            apa = APieceAdder(
+                name=piece,
+                source=p['path'],
+                num=p['num'],
+                auto_size=p["auto_size"],
+                p_size=p["size"],
+                p_rotation=p["rotation"],
+                p_color=p["color"],
+            )
+            if apa.auto_size:
+                apa.p_size = dp(80), dp(80)
             layout.add_widget(apa)
             apa.bind(target=self.change_target_piece)
 

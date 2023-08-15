@@ -5,6 +5,7 @@
 #:import GameScreen game_screen.GameScreen
 #:import Die die.Die
 
+
 <Game>:
     canvas.before:
         Color:
@@ -22,19 +23,27 @@
             on_face:
                 if self.face == 6: root.current = "credit"
 
+        MDRectangleFlatButton:
+            text: app.lang_name
+            font_size: sp(18)
+            right: root.width - dp(10)
+            y: dp(10)
+            on_release:
+                app.next_lang()
+
         MDBoxLayout:
             orientation: 'vertical'
             spacing: dp(30)
             adaptive_size: True
             pos_hint: {'center_y': 0.5, 'center_x': 0.5}
             MDTextButton:
-                text: 'PLAY'
+                text: app.lang['PLAY']
                 font_size: sp(30)
                 on_release:
                     if root.game_set: root.current = "game_screen"
                     if not root.game_set: root.current = "themes_assets"
             MDRaisedButton:
-                text: 'Choose Game'
+                text: app.lang['Choose Game']
                 font_size: sp(30)
                 on_release:
                     root.current = "themes_assets"
@@ -44,10 +53,10 @@
         back_click_to: 'themes_assets'
         MDTextField:
             id: editing_set_text_field
-            hint_text: "New Game Name"
+            hint_text: app.lang["New Game Name"]
             pos: new_game_option.x, new_game_option.top
             size_hint: None, None
-            text: root.editing_set.name
+            text: app.lang[root.editing_set.name]
             width: new_game_option.width
         MDGridLayout:
             id: new_game_option
@@ -56,32 +65,32 @@
             adaptive_size: True
             pos_hint: {'center_y': 0.5, 'center_x': 0.5}
             MDRectangleFlatButton:
-                text: 'Grid'
+                text: app.lang['Grid']
                 font_size: sp(18)
                 on_release:
                     root.current = 'grid_setup'
             MDRectangleFlatButton:
-                text: 'Pieces'
+                text: app.lang['Pieces']
                 font_size: sp(18)
                 on_release:
                     root.current = 'pieces_screen'
             MDRectangleFlatButton:
-                text: 'Start Positioning'
+                text: app.lang['Positioning']
                 font_size: sp(18)
                 on_release:
                     root.current = 'edit_game_screen'
             MDRectangleFlatButton:
-                text: 'Resources'
+                text: app.lang['Resources']
                 font_size: sp(18)
                 on_release:
                     root.current = 'resources'
             MDRaisedButton:
-                text: 'Save'
+                text: app.lang['Save']
                 font_size: sp(18)
                 on_release:
                     root.editing_set_save()
             MDRaisedButton:
-                text: 'Cancel'
+                text: app.lang['Cancel']
                 font_size: sp(18)
                 on_release:
                     root.current = 'themes_assets'

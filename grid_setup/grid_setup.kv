@@ -11,7 +11,7 @@
     min: 1
     max: 10
     MDLabel:
-        text: root.text
+        text: app.lang[root.text]
         size_hint: None, 1
         width: dp(100)
     MDSlider:
@@ -28,7 +28,7 @@
 <GridSetup>:
     MDRectangleFlatButton:
         pos: dp(10), root.height - (dp(10) + self.height)
-        text: 'Done'
+        text: app.lang['Done']
         on_release:
             root.save()
             app.root.current = 'new_game'
@@ -72,7 +72,7 @@
                     size_hint: None, None
                     size: dp(40), dp(40)
                 MDLabel:
-                    text: 'Default Color'
+                    text: app.lang['Default Color']
                     size_hint: 1, 1
 
                 MDCheckbox:
@@ -81,7 +81,7 @@
                     size_hint: None, None
                     size: dp(40), dp(40)
                 MDLabel:
-                    text: 'Background'
+                    text: app.lang['Background']
                     size_hint: 1, 1
 
             TextSlider:
@@ -123,7 +123,7 @@
                     size_hint: None, None
                     size: dp(40), dp(40)
                 MDLabel:
-                    text: 'Square'
+                    text: app.lang['Square']
                     size_hint: 1, 1
 
             TextSlider:
@@ -162,7 +162,7 @@
                     size_hint: None, None
                     size: dp(40), dp(40)
                 MDLabel:
-                    text: 'Border'
+                    text: app.lang['Border']
                     size_hint: 1, 1
 
             TextSlider:

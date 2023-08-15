@@ -297,8 +297,8 @@ from kivy.properties import (
     StringProperty,
 )
 from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-# from Arabic_for_Kivy import ArInput as TextInput
+# from kivy.uix.textinput import TextInput
+from Arabic_for_Kivy import ArInput as TextInput
 
 from kivymd import uix_path
 from kivymd.font_definitions import theme_font_styles

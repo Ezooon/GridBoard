@@ -275,9 +275,10 @@ class MDLabel(ThemableBehavior, Label, MDAdaptiveWidget):
     _capitalizing = BooleanProperty(False)
 
     def _get_text(self):
+        from Arabic_for_Kivy import to_ar
         if self._capitalizing:
             return self._text.upper()
-        return self._text
+        return to_ar(self._text)
 
     def _set_text(self, value):
         self._text = value
