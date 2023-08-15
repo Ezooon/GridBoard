@@ -3,7 +3,7 @@
 <GameScreen>:
     MDRectangleFlatButton:
         pos: dp(10), root.height - (dp(10) + self.height)
-        text: 'Done'
+        text: app.lang['Done']
         disabled: not root.editing
         opacity: 1 if root.editing else 0
         on_release:
@@ -58,5 +58,5 @@
             on_active:
                 grid.click = self.active
         MDLabel:
-            text: 'Click'
+            text: app.lang['Click']
             size_hint: 1, 1

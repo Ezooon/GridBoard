@@ -74,16 +74,16 @@
                 height: dp(50)
                 spacing: dp(10)
                 MDLabel:
-                    text: "Game Sets"
+                    text: app.lang["Game Sets"]
                     font_size: sp(20)
                 MDRoundFlatButton:
-                    text: 'NEW SET'
+                    text: app.lang['NEW SET']
                     pos_hint: {'center_y': 0.5}
                     on_release:
                         app.root.new_game_set()
 
                 MDRoundFlatButton:
-                    text: 'back'
+                    text: app.lang['back']
                     pos_hint: {'center_y': 0.5}
                     on_release:
                         app.root.current = 'welcome_screen'

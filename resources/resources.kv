@@ -10,13 +10,13 @@
             x: dp(5)
             top: root.top - dp(5)
             MDRoundFlatButton:
-                text: 'back'
+                text: app.lang['back']
                 pos_hint: {'center_y': 0.5}
                 on_release:
                     root.save()
                     app.root.current = 'new_game'
             MDLabel:
-                text: "Resources"
+                text: app.lang["Resources"]
                 font_size: sp(20)
 
         ScrollView:
@@ -39,7 +39,7 @@
                     BoxLayout:
                         orientation: 'vertical'
                         MDLabel:
-                            text: 'Background'
+                            text: app.lang['Background']
                         MDLabel:
                             id: background_path
                             font_name: "kivymd/fonts/Roboto-Thin.ttf"
@@ -65,7 +65,7 @@
                     BoxLayout:
                         orientation: 'vertical'
                         MDLabel:
-                            text: 'Grid Background'
+                            text: app.lang['Grid Background']
                         MDLabel:
                             id: grid_background_path
                             font_name: "kivymd/fonts/Roboto-Thin.ttf"
@@ -86,5 +86,5 @@
                     pos_hint: {'center_x': 0.5}
                     mode: 'rectangle'
                     multiline: True
-                    hint_text: 'Help'
+                    hint_text: app.lang['Help']
                     line_color_normal: self.theme_cls.primary_color

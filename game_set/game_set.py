@@ -94,14 +94,18 @@ class GameSet:
         self._pieces_path = path.join(self.path, 'pieces') if "pieces" in dirs else ""
         self.pieces_num = 0
         if self._pieces_path:
-            for piece in listdir(self._pieces_path):
-                if piece not in self.pieces:
-                    self.pieces[piece] = {
-                        'num': 0, 'poses': [], "color": [1, 1, 1, 1],
-                        "auto_size": True, "size": [10, 10], "rotation": 0
-                    }
-                self.pieces[piece]['path'] = path.join(self._pieces_path, piece)
-                self.pieces_num += self.pieces[piece]['num']
+            for piece in list(self.pieces.keys()).copy():
+                # if piece not in self.pieces.keys():
+                #     self.pieces[piece] = {
+                #         'num': 0, 'poses': [], "color": [1, 1, 1, 1],
+                #         "auto_size": True, "size": [10, 10], "rotation": 0
+                #     }
+                p_path = path.join(self._pieces_path, piece)
+                if path.exists(p_path):
+                    self.pieces[piece]['path'] = path.join(self._pieces_path, piece)
+                    self.pieces_num += self.pieces[piece]['num']
+                else:
+                    self.pieces.pop(piece)
 
         # dies
         self.dies = self.init["dies"]
@@ -121,7 +125,10 @@ class GameSet:
         if path.isdir(value):
             for piece in listdir(value):
                 if piece not in self.pieces:
-                    self.pieces[piece] = {'num': 0, 'poses': []}
+                    self.pieces[piece] = {
+                        'num': 0, 'poses': [], "color": [1, 1, 1, 1],
+                        "auto_size": True, "size": [50, 50], "rotation": 0
+                    }
                 self.pieces[piece]["path"] = path.join(value, piece)
         self._pieces_path = value
 
