@@ -298,7 +298,7 @@ from kivy.properties import (
 )
 from kivy.uix.label import Label
 # from kivy.uix.textinput import TextInput
-from Arabic_for_Kivy import ArInput as TextInput
+from Arabic_for_Kivy import to_ar, ArInput as TextInput
 
 from kivymd import uix_path
 from kivymd.font_definitions import theme_font_styles
@@ -1346,8 +1346,8 @@ class MDTextField(ThemableBehavior, TextInput):
 
     def on_hint_text(self, instance_text_field, hint_text: str) -> None:
         if hint_text:
-            self.__hint_text = hint_text
-        self._hint_text_label.text = hint_text
+            self.__hint_text = to_ar(hint_text)
+        self._hint_text_label.text = to_ar(hint_text)
         self._hint_text_label.font_size = sp(16)
 
     def on_width(self, instance_text_field, width: float) -> None:
