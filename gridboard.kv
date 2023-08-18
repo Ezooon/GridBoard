@@ -39,6 +39,9 @@
             MDTextButton:
                 text: app.lang['PLAY']
                 font_size: sp(30)
+                width: dp(100)
+                halign: "center"
+                pos_hint: {'center_x': 0.5}
                 on_release:
                     if root.game_set: root.current = "game_screen"
                     if not root.game_set: root.current = "themes_assets"

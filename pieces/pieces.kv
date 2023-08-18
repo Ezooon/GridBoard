@@ -38,7 +38,7 @@
                         text: app.lang['Pieces Folder']
                     MDLabel:
                         id: pieces_path
-                        font_name: "kivymd/fonts/Roboto-Thin.ttf"
+                        font_name: "kivymd/fonts/Roboto-Regular.ttf"
                         text: "assets/game_sets/default/pieces"
                         size_hint: None, None
                         size: root.width - dp(30), dp(30)
@@ -183,6 +183,15 @@
             size_hint: None, None
             size: root.p_size
             color: root.p_color
+            canvas.before:
+                PushMatrix
+                Rotate:
+                    angle: root.p_rotation
+                    axis: 0, 0, 1
+                    origin: self.center
+            canvas.after:
+                PopMatrix
+
         MDBoxLayout:
             size_hint: None, None
             width: dp(100)
