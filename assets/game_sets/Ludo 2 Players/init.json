@@ -23,13 +23,13 @@
         "poses": [
             [
                 -22.0,
-                -23.999999999999943
+                -24.0
             ]
         ],
         "color": [
-            1.0,
             1,
-            1.0,
+            1,
+            1,
             1
         ],
         "auto_size": false,
@@ -37,12 +37,12 @@
             45.00759878419453,
             45.00759878419453
         ],
-        "rotation": 0.0,
+        "rotation": 0,
         "draggable": true
     },
     "pieces": {
         "blue_piece_trans.png": {
-            "num": 4,
+            "num": 0,
             "poses": [
                 [
                     -89.97913350856055,
@@ -91,11 +91,11 @@
                     1
                 ]
             ],
-            "player": "Player 2",
+            "player": "",
             "draggable": false
         },
         "green_piece_trans.png": {
-            "num": 4,
+            "num": 0,
             "poses": [
                 [
                     49.713176061751994,
@@ -144,7 +144,7 @@
                     13
                 ]
             ],
-            "player": "Player 4",
+            "player": "",
             "draggable": false
         },
         "red_piece_trans.png": {

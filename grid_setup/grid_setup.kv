@@ -1,4 +1,3 @@
-#:import Cell grid.Cell
 #:import Grid grid.Grid
 
 <TextSlider@MDBoxLayout>:
@@ -124,6 +123,15 @@
                     size: dp(40), dp(40)
                 MDLabel:
                     text: app.lang['Square']
+                    size_hint: 1, 1
+                MDCheckbox:
+                    id: fit_screen
+                    active: True
+                    top: rowslider.y
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                MDLabel:
+                    text: app.lang['Fit Screen']
                     size_hint: 1, 1
 
             TextSlider:

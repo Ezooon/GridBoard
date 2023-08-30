@@ -61,6 +61,31 @@
             size_hint: None, None
             text: app.lang[root.editing_set.name]
             width: new_game_option.width
+
+        MDBoxLayout:
+            size_hint: 1, None
+            height: dp(40)
+            MDCheckbox:
+                id: generate_code
+                active: False
+                size_hint: None, None
+                size: dp(40), dp(40)
+                on_active:
+                    debug.active = self.active
+                    if self.active: root.confirm_code_generation(self)
+            MDLabel:
+                text: app.lang['Generate code file']
+                size_hint: 1, 1
+
+            MDCheckbox:
+                id: debug
+                active: root.editing_set.init["debug"]
+                size_hint: None, None
+                size: dp(40), dp(40)
+            MDLabel:
+                text: app.lang['Debug']
+                size_hint: 1, 1
+
         MDGridLayout:
             id: new_game_option
             cols: 2

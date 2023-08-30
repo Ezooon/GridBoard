@@ -27,8 +27,10 @@ class APieceAdder(ButtonBehavior, MDFloatLayout):
     num = NumericProperty(0)
     target = BooleanProperty(False)
     auto_size = BooleanProperty(False)
+    draggable = BooleanProperty(False)
     p_size = ListProperty([dp(80), dp(80)])
     p_rotation = NumericProperty(0)
+    player = StringProperty('')
     p_color = ListProperty([1, 1, 1, 1])
 
     def __init__(self, **kwargs):
@@ -60,9 +62,12 @@ sg = APieceAdder()
 
 class PiecesScreen(MDScreen):
     target_piece = ObjectProperty(sg)
+    active_player = StringProperty('Player 1')
 
     def __init__(self, **kw):
         super().__init__(**kw)
+        self.dies = None
+        self.pieces = []
         self.file_manager_is_open = False
         self.file_manager = MDFileManager(
             select_path=print,
@@ -89,15 +94,29 @@ class PiecesScreen(MDScreen):
                 p_size=p["size"],
                 p_rotation=p["rotation"],
                 p_color=p["color"],
+                draggable=p["draggable"],
+                player=p["player"]
             )
             if apa.auto_size:
                 apa.p_size = dp(80), dp(80)
-            layout.add_widget(apa)
-            apa.bind(target=self.change_target_piece)
+            if p["player"] == self.active_player:
+                layout.add_widget(apa)
 
-        die = APieceAdder(name="die", source="assets/die/6.png", num=editing_set.dies[0])
-        layout.add_widget(die)
-        die.bind(target=self.change_target_piece)
+            apa.bind(num=self.change_piece_player)
+            apa.bind(target=self.change_target_piece)
+            self.pieces.append(apa)
+
+        dies = editing_set.dies
+        self.dies = APieceAdder(name="die", source="assets/die/6.png", num=dies["num"],
+                                auto_size=dies["auto_size"],
+                                p_size=dies["size"],
+                                p_rotation=dies["rotation"],
+                                p_color=dies["color"],
+                                draggable=dies["draggable"],
+                                )
+        layout.add_widget(self.dies)
+        dies.bind(target=self.change_target_piece)
+        self.dies.bind(target=self.change_target_piece)
 
     def set_up(self, dt):
         root = App.get_running_app().root
@@ -106,6 +125,11 @@ class PiecesScreen(MDScreen):
 
         # Drop down menus
         sets = root.game_sets
+        players = [{
+                    "text": f"Player {i + 1}",
+                    "viewclass": "OneLineListItem",
+                    "on_release": lambda x=i: self.change_player(f"Player {x + 1}"),
+                } for i in range(4)]
         pieces_items = [{
                     "text": "Browse",
                     "viewclass": "OneLineListItem",
@@ -122,11 +146,29 @@ class PiecesScreen(MDScreen):
                 })
 
         self.ids.pieces_path.text = editing_set.pieces_path
+        self.players_menu = MDDropdownMenu(
+            caller=self.ids.players_button,
+            items=players,
+            width_mult=4,
+        )
+
         self.pieces_menu = MDDropdownMenu(
             caller=self.ids.pieces_card,
             items=pieces_items,
             width_mult=4,
         )
+
+    def change_player(self, player):
+        self.active_player = player
+        self.players_menu.dismiss()
+
+        layout = self.ids.pieces_display
+        for piece in self.pieces:
+            if piece.player != player and piece.num > 0:
+                layout.remove_widget(piece)
+            elif piece not in layout.children and piece.player == player:
+                index = self.pieces.index(piece)
+                layout.add_widget(piece, index if index > 0 else 1)
 
     def change_pieces(self, pieces_path=""):
         if self.file_manager_is_open:
@@ -157,6 +199,7 @@ class PiecesScreen(MDScreen):
             self.target_piece = apa
 
             self.ids.auto_size.active = apa.auto_size
+            self.ids.draggable.active = apa.draggable
             self.ids.size.value = apa.p_size[0]
             self.ids.rotation.value = apa.p_rotation
             self.ids.red.value = apa.p_color[0] * 255
@@ -164,14 +207,28 @@ class PiecesScreen(MDScreen):
             self.ids.blue.value = apa.p_color[2] * 255
             self.ids.alpha.value = apa.p_color[3] * 255
 
+    def change_piece_player(self, apa, value):
+        if value <= 0:
+            apa.player = ''
+            return
+        if value > 0 and not apa.player:
+            apa.player = self.active_player
+
     def save(self):
         editing_set = App.get_running_app().root.editing_set
-        for p in self.ids.pieces_display.children:
-            if p.name == 'die':
-                editing_set.dies[0] = p.num
-                continue
+
+        editing_set.dies["num"] = self.dies.num
+        editing_set.dies["auto_size"] = self.dies.auto_size
+        editing_set.dies["draggable"] = self.dies.draggable
+        editing_set.dies["size"] = self.dies.p_size
+        editing_set.dies["rotation"] = self.dies.p_rotation
+        editing_set.dies["color"] = self.dies.p_color
+
+        for p in self.pieces:
+            editing_set.pieces[p.name]["player"] = p.player
             editing_set.pieces[p.name]["num"] = p.num
             editing_set.pieces[p.name]["auto_size"] = p.auto_size
+            editing_set.pieces[p.name]["draggable"] = p.draggable
             editing_set.pieces[p.name]["size"] = p.p_size
             editing_set.pieces[p.name]["rotation"] = p.p_rotation
             editing_set.pieces[p.name]["color"] = p.p_color

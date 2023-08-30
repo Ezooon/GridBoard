@@ -1,1 +1,1 @@
-from .grid import Grid, Cell
+from .grid import Grid

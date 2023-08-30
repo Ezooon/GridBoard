@@ -14,48 +14,81 @@
             350.0,
             350.0
         ],
-        "click": true
+        "click": true,
+        "fit_screen": true
     },
-    "dies": [
-        0,
-        []
-    ],
+    "debug": true,
+    "dies": {
+        "num": 0,
+        "poses": [],
+        "color": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "auto_size": true,
+        "size": [
+            50,
+            50
+        ],
+        "rotation": 0,
+        "draggable": true
+    },
     "pieces": {
         "black.png": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "blue.png": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "green.png": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "red.png": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "white.png": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "Layer 2(pasted).PNG": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "Layer 3(pasted).PNG": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "Layer 4(pasted).PNG": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         },
         "Layer 5(pasted).PNG": {
             "num": 0,
-            "poses": []
+            "poses": [],
+            "player": "Player 1",
+            "draggable": false
         }
     }
 }

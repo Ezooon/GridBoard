@@ -12,6 +12,8 @@
   "Resources": "الموارد",
   "Save": "حفظ",
   "Cancel": "إلغاء",
+  "Generate code file": "Generate code file",
+  "Debug": "Debug",
 
   "Done": "تم",
   "back": "رجوع",
@@ -19,6 +21,7 @@
 
   "Default Color": "اللون الإفترضي",
   "Square": "مربع",
+  "Fit Screen": "تناسب حجم الشاشة",
   "Width": "العرض",
   "Height": "الإرتفاع",
   "Border": "حدود",
@@ -34,6 +37,7 @@
   "Pieces Folder": "مجلد القطع",
   "Fit Grid Cells": "تناسب حجم الخلية",
   "Rotation": "الإلتفاف",
+  "Draggable": "تحريك بالسحب",
 
   "Click": "داخل الخلية",
 
