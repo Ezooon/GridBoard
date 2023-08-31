@@ -1,6 +1,17 @@
 #:import Grid grid.Grid
 
 <GameScreen>:
+    MDLabel:
+        text: "\n".join(grid.exception_log)
+        color: self.theme_cls.error_color
+        valign: "bottom"
+        size_hint: 1, None
+        size: self.texture_size
+        font_name: "kivymd/fonts/Roboto-Italic.ttf"
+        font_size: sp(10)
+        opacity: 1 if root.editing or root.debug else 0
+
+
     MDRectangleFlatButton:
         pos: dp(10), root.height - (dp(10) + self.height)
         text: app.lang['Done']
@@ -28,20 +39,45 @@
         right: root.width - dp(10)
         on_release:
             root.restart()
+#
+#    MDIconButton:
+#        icon: "undo-variant"
+#        y: dp(10)
+#        disabled: root.editing
+#        opacity: 0 if root.editing else 1
+#        right: root.width - dp(10)
+#        on_release:
+#            root.undo()
 
-    MDIconButton:
-        icon: "undo-variant"
-        y: dp(10)
-        disabled: root.editing
-        opacity: 0 if root.editing else 1
-        right: root.width - dp(10)
-        on_release:
-            root.undo()
+    MDStackLayout:
+        id: Player 2
+        size_hint: None, None
+        size: grid.width, (root.height - grid.height) / 4
+        pos: grid.x, root.top - self.height # if root.height > root.width
+    MDStackLayout:
+        id: Player 4
+        orientation: "lr-bt"
+        size_hint: None, None
+        size: grid.width, (root.height - grid.height) / 4
+        pos: grid.x, grid.top
 
     Grid:
         id: grid
         size_hint: None, None
         pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+
+    MDStackLayout:
+        id: Player 3
+        size_hint: None, None
+        size: grid.width, (root.height - grid.height) / 4
+        x: grid.x
+        top: grid.y
+    MDStackLayout:
+        id: Player 1
+        orientation: "lr-bt"
+        size_hint: None, None
+        x: grid.x
+        size: grid.width, (root.height - grid.height) / 4
 
     MDBoxLayout:
         size_hint: 1, None

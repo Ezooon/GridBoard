@@ -14,24 +14,82 @@
             350.0,
             350.0
         ],
-        "click": true
+        "click": true,
+        "fit_screen": true
     },
-    "dies": [
-        0,
-        []
-    ],
+    "debug": true,
+    "dies": {
+        "num": 0,
+        "poses": [],
+        "color": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "auto_size": true,
+        "size": [
+            50,
+            50
+        ],
+        "rotation": 0,
+        "draggable": true
+    },
     "pieces": {
-        "b_bishop_png_512px.png": {
+        "bishop_black.png": {
             "num": 2,
             "poses": [
                 [
-                    2,
-                    0
+                    46.75,
+                    134.25
                 ],
                 [
-                    5,
-                    0
+                    -84.5,
+                    134.25
                 ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 180,
+            "player": "Player 2",
+            "cells": [
+                [
+                    5,
+                    7
+                ],
+                [
+                    2,
+                    7
+                ]
+            ],
+            "draggable": false
+        },
+        "bishop_white.png": {
+            "num": 2,
+            "poses": [
+                [
+                    46.75,
+                    -172.0
+                ],
+                [
+                    -84.5,
+                    -172.0
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
             ],
             "auto_size": true,
             "size": [
@@ -39,45 +97,131 @@
                 80.0
             ],
             "rotation": 0,
+            "player": "Player 1",
+            "cells": [
+                [
+                    5,
+                    0
+                ],
+                [
+                    2,
+                    0
+                ]
+            ],
+            "draggable": false
+        },
+        "king_black.png": {
+            "num": 1,
+            "poses": [
+                [
+                    3.0,
+                    134.25
+                ]
+            ],
             "color": [
                 1,
                 1,
                 1,
                 1
-            ]
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 180,
+            "player": "Player 2",
+            "cells": [
+                [
+                    4,
+                    7
+                ]
+            ],
+            "draggable": false
         },
-        "b_king_png_512px.png": {
+        "king_white.png": {
             "num": 1,
             "poses": [
+                [
+                    3.0,
+                    -172.0
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 0,
+            "player": "Player 1",
+            "cells": [
                 [
                     4,
                     0
                 ]
             ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
+            "draggable": false
         },
-        "b_knight_png_512px.png": {
+        "knight_black.png": {
             "num": 2,
             "poses": [
                 [
-                    1,
-                    0
+                    90.5,
+                    134.25
                 ],
                 [
-                    6,
-                    0
+                    -128.25,
+                    134.25
                 ]
+            ],
+            "color": [
+                1.0,
+                1,
+                1,
+                1
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 180,
+            "player": "Player 2",
+            "cells": [
+                [
+                    6,
+                    7
+                ],
+                [
+                    1,
+                    7
+                ]
+            ],
+            "draggable": false
+        },
+        "knight_white.png": {
+            "num": 2,
+            "poses": [
+                [
+                    90.5,
+                    -172.0
+                ],
+                [
+                    -128.25,
+                    -172.0
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
             ],
             "auto_size": true,
             "size": [
@@ -85,260 +229,231 @@
                 80.0
             ],
             "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
+            "player": "Player 1",
+            "cells": [
+                [
+                    6,
+                    0
+                ],
+                [
+                    1,
+                    0
+                ]
+            ],
+            "draggable": false
         },
-        "b_pawn_png_512px.png": {
+        "pawn_black.png": {
             "num": 8,
             "poses": [
                 [
+                    134.25,
+                    90.5
+                ],
+                [
+                    90.5,
+                    90.5
+                ],
+                [
+                    46.75,
+                    90.5
+                ],
+                [
+                    3.0,
+                    90.5
+                ],
+                [
+                    -40.75,
+                    90.5
+                ],
+                [
+                    -84.5,
+                    90.5
+                ],
+                [
+                    -128.25,
+                    90.5
+                ],
+                [
+                    -172.0,
+                    90.5
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 180,
+            "player": "Player 2",
+            "cells": [
+                [
                     7,
-                    1
+                    6
                 ],
                 [
                     6,
-                    1
+                    6
                 ],
                 [
                     5,
-                    1
+                    6
                 ],
                 [
                     4,
-                    1
+                    6
                 ],
                 [
                     3,
-                    1
+                    6
                 ],
                 [
                     2,
-                    1
+                    6
                 ],
                 [
                     1,
-                    1
+                    6
                 ],
                 [
                     0,
-                    1
+                    6
                 ]
             ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
+            "draggable": false
         },
-        "b_queen_png_512px.png": {
-            "num": 1,
-            "poses": [
-                [
-                    3,
-                    0
-                ]
-            ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
-        },
-        "b_rook_png_512px.png": {
-            "num": 2,
-            "poses": [
-                [
-                    7,
-                    0
-                ],
-                [
-                    0,
-                    0
-                ]
-            ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
-        },
-        "w_bishop_png_512px.png": {
-            "num": 2,
-            "poses": [
-                [
-                    2,
-                    7
-                ],
-                [
-                    5,
-                    7
-                ]
-            ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
-        },
-        "w_king_png_512px.png": {
-            "num": 1,
-            "poses": [
-                [
-                    3,
-                    7
-                ]
-            ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
-        },
-        "w_knight_png_512px.png": {
-            "num": 2,
-            "poses": [
-                [
-                    6,
-                    7
-                ],
-                [
-                    1,
-                    7
-                ]
-            ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
-        },
-        "w_pawn_png_512px.png": {
+        "pawn_white.png": {
             "num": 8,
             "poses": [
                 [
+                    -172.0,
+                    -128.25
+                ],
+                [
+                    -128.25,
+                    -128.25
+                ],
+                [
+                    -40.75,
+                    -128.25
+                ],
+                [
+                    134.25,
+                    -128.25
+                ],
+                [
+                    90.5,
+                    -128.25
+                ],
+                [
+                    46.75,
+                    -128.25
+                ],
+                [
+                    3.0,
+                    -128.25
+                ],
+                [
+                    -84.5,
+                    -128.25
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 0,
+            "player": "Player 1",
+            "cells": [
+                [
                     0,
-                    6
+                    1
                 ],
                 [
                     1,
-                    6
-                ],
-                [
-                    2,
-                    6
-                ],
-                [
-                    7,
-                    6
-                ],
-                [
-                    6,
-                    6
-                ],
-                [
-                    5,
-                    6
+                    1
                 ],
                 [
                     3,
-                    6
-                ],
-                [
-                    4,
-                    6
-                ]
-            ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
-        },
-        "w_queen_png_512px.png": {
-            "num": 1,
-            "poses": [
-                [
-                    4,
-                    7
-                ]
-            ],
-            "auto_size": true,
-            "size": [
-                80.0,
-                80.0
-            ],
-            "rotation": 0,
-            "color": [
-                1,
-                1,
-                1,
-                1
-            ]
-        },
-        "w_rook_png_512px.png": {
-            "num": 2,
-            "poses": [
-                [
-                    0,
-                    7
+                    1
                 ],
                 [
                     7,
+                    1
+                ],
+                [
+                    6,
+                    1
+                ],
+                [
+                    5,
+                    1
+                ],
+                [
+                    4,
+                    1
+                ],
+                [
+                    2,
+                    1
+                ]
+            ],
+            "draggable": false
+        },
+        "queen_black.png": {
+            "num": 1,
+            "poses": [
+                [
+                    -40.75,
+                    134.25
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 180,
+            "player": "Player 2",
+            "cells": [
+                [
+                    3,
                     7
                 ]
+            ],
+            "draggable": false
+        },
+        "queen_white.png": {
+            "num": 1,
+            "poses": [
+                [
+                    -40.75,
+                    -172.0
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
             ],
             "auto_size": true,
             "size": [
@@ -346,12 +461,88 @@
                 80.0
             ],
             "rotation": 0,
+            "player": "Player 1",
+            "cells": [
+                [
+                    3,
+                    0
+                ]
+            ],
+            "draggable": false
+        },
+        "rook_black.png": {
+            "num": 2,
+            "poses": [
+                [
+                    134.25,
+                    134.25
+                ],
+                [
+                    -172.0,
+                    134.25
+                ]
+            ],
             "color": [
                 1,
                 1,
                 1,
                 1
-            ]
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 180,
+            "player": "Player 2",
+            "cells": [
+                [
+                    7,
+                    7
+                ],
+                [
+                    0,
+                    7
+                ]
+            ],
+            "draggable": false
+        },
+        "rook_white.png": {
+            "num": 2,
+            "poses": [
+                [
+                    -172.0,
+                    -172.0
+                ],
+                [
+                    134.25,
+                    -172.0
+                ]
+            ],
+            "color": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "auto_size": true,
+            "size": [
+                80.0,
+                80.0
+            ],
+            "rotation": 0,
+            "player": "Player 1",
+            "cells": [
+                [
+                    0,
+                    0
+                ],
+                [
+                    7,
+                    0
+                ]
+            ],
+            "draggable": false
         }
     }
 }

@@ -1,0 +1,2 @@
+You can move your piece one space left, right, up, or down.
+You can jump on an empty space behind your opponent piece to take it out, you can keep jumping as long as the same piece can make a kill.

@@ -3,13 +3,25 @@ from shutil import copyfile, copytree, rmtree
 from kivy.utils import platform
 import json
 
+code_temp = """from pieces.piece_lib import *
+self = grid.current_piece
+
+logic = <
+{}
+>"""
+piece_logic_temp = """
+    "{}": <
+        "movements": [],
+        "kills": [],
+    >,
+"""
 root_path = path.expanduser('~')
-games_path = path.join(root_path, 'Documents', 'GridBord')
+games_path = path.join(root_path, 'Documents', 'GridBoard')
 if platform == 'android':
     from android.storage import primary_external_storage_path
 
     root_path = primary_external_storage_path()
-    games_path = path.join(root_path, 'GridBord')
+    games_path = path.join(root_path, 'GridBoard')
 
 
 def replace(current, new, _path, name):
@@ -36,9 +48,12 @@ class GameSet:
         if external:
             self.path = path.join(games_path, name)
         else:
-            self.path = path.join("assets/game_sets", name)
+            self.path = path.join("assets", "game_sets", name)
 
         dirs = listdir(self.path)
+
+        # code
+        self.code_path = path.join(self.path, 'code.py') if "code.py" in dirs else ""
 
         # help
         self.help_path = path.join(self.path, 'help.txt') if "help.txt" in dirs else ""
@@ -68,9 +83,15 @@ class GameSet:
                 "background": False,
                 "line_color": [255, 255, 255, 255],
                 "size": [100, 100],
-                "click": True
+                "click": True,
+                "fit_screen": True,
             },
-            "dies": [0, []],
+            "debug": True,
+            "dies": {
+                        'num': 0, 'poses': [], "color": [1, 1, 1, 1],
+                        "auto_size": True, "size": [50, 50], "rotation": 0,
+                        "draggable": True
+                    },
             "pieces": {}
         }  # default init
         self.init_path = path.join(self.path, 'init.json') if "init.json" in dirs else ""
@@ -86,6 +107,9 @@ class GameSet:
                 if 'dies' in init.keys():
                     self.init['dies'] = init['dies']
 
+                if 'debug' in init.keys():
+                    self.init['debug'] = init['debug']
+
         # grid
         self.grid = self.init['grid']
 
@@ -95,20 +119,17 @@ class GameSet:
         self.pieces_num = 0
         if self._pieces_path:
             for piece in list(self.pieces.keys()).copy():
-                # if piece not in self.pieces.keys():
-                #     self.pieces[piece] = {
-                #         'num': 0, 'poses': [], "color": [1, 1, 1, 1],
-                #         "auto_size": True, "size": [10, 10], "rotation": 0
-                #     }
                 p_path = path.join(self._pieces_path, piece)
                 if path.exists(p_path):
                     self.pieces[piece]['path'] = path.join(self._pieces_path, piece)
                     self.pieces_num += self.pieces[piece]['num']
+                    self.pieces[piece].setdefault("player", "Player 1")
+                    self.pieces[piece].setdefault("draggable", True)
                 else:
                     self.pieces.pop(piece)
 
         # dies
-        self.dies = self.init["dies"]
+        self.dies = self.init['dies']
 
     @property
     def pieces_path(self):
@@ -127,7 +148,8 @@ class GameSet:
                 if piece not in self.pieces:
                     self.pieces[piece] = {
                         'num': 0, 'poses': [], "color": [1, 1, 1, 1],
-                        "auto_size": True, "size": [50, 50], "rotation": 0
+                        "auto_size": True, "size": [50, 50], "rotation": 0,
+                        "player": "Player 1", "draggable": True
                     }
                 self.pieces[piece]["path"] = path.join(value, piece)
         self._pieces_path = value
@@ -194,3 +216,12 @@ class GameSet:
         rename(self.path, new_path)
         self.__init__(name, self.external)
 
+    def generate_code(self):
+        pieces = list(self.pieces.keys())
+        pieces.sort()
+        pieces_logic = ""
+        for piece in pieces:
+            pieces_logic += piece_logic_temp.format(piece)
+        code = code_temp.format(pieces_logic).replace("<", "{").replace(">", "}")
+        with open(path.join(self.path, "code.py"), 'w', encoding="utf-8") as f:
+            f.write(code)

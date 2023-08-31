@@ -18,9 +18,11 @@ class GridSetup(MDScreen):
     def setup(self, dt):
         editing_set = App.get_running_app().root.editing_set
         self.ids.grid.set(editing_set)
+        self.ids.grid.fit_screen = False
         self.ids.text_.active = False
         self.ids.background_.active = editing_set.grid["background"]
         self.ids.square.active = editing_set.grid["size"][0] == editing_set.grid["size"][1]
+        self.ids.fit_screen.active = editing_set.grid["fit_screen"]
         self.ids.width.value = editing_set.grid["size"][0]
         self.ids.height.value = editing_set.grid["size"][1]
         self.ids.outline.value = editing_set.grid["border"]
@@ -49,5 +51,6 @@ class GridSetup(MDScreen):
             "background": grid.background,
             "line_color": [c * 255 for c in line_color],
             "size": [x/d, y/d],
-            "click": grid.click
+            "click": grid.click,
+            "fit_screen": self.ids.fit_screen.active
         }

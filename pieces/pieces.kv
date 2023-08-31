@@ -61,10 +61,26 @@
                     MDBoxLayout:
                         id: pieces_display
                         size_hint: None, None
-                        side_padding: (self.parent.width - (len(self.children) * dp(55))) / 2
-                        padding: (self.side_padding if self.side_padding > 0 else 0), 0, (self.side_padding if self.side_padding > 0 else 0), 0
+                        padding: dp(100), 0, dp(100), 0
                         adaptive_size: True
                         spacing: dp(5)
+
+            MDFloatLayout:
+                size_hint: None, None
+                size: 0, 0
+                MDFlatButton:
+                    id: players_button
+                    top: pieces_card.top
+                    x: pieces_card.x
+                    text: root.active_player
+                    on_release: root.players_menu.open()
+                    canvas.after:
+                        Color:
+                            rgba: app.theme_cls.primary_color
+                        Line:
+                            width: dp(1)
+                            rounded_rectangle:
+                                self.x, self.y, self.width, self.height, 0, dp(10), 0, dp(10), 100
 
         ScrollView:
             scroll_timeout: 100
@@ -92,6 +108,16 @@
                             root.target_piece.auto_size = self.active
                     MDLabel:
                         text: app.lang['Fit Grid Cells']
+                        size_hint: 1, 1
+                    MDCheckbox:
+                        id: draggable
+                        active: True
+                        size_hint: None, None
+                        size: dp(40), dp(40)
+                        on_active:
+                            root.target_piece.draggable = self.active
+                    MDLabel:
+                        text: app.lang['Draggable']
                         size_hint: 1, 1
 
                 TextSlider:
@@ -209,3 +235,4 @@
                 icon: 'minus'
                 on_press:
                     root.num -= 1
+

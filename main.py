@@ -4,6 +4,8 @@ from os import listdir, path, makedirs, environ
 from random import randint
 from kivy.core.window import Window
 from kivymd.toast import toast
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screenmanager import MDScreenManager
 from kivy.properties import ObjectProperty, ListProperty, BooleanProperty, DictProperty, StringProperty
 from kivy.utils import platform
@@ -14,14 +16,15 @@ import webbrowser
 environ["KIVY_ORIENTATION"] = "portrait"
 
 root_path = path.expanduser('~')
-games_path = path.join(root_path, 'Documents', 'GridBord')
+games_path = path.join(root_path, 'Documents', 'GridBoard')
 if platform == 'android':
     from android.permissions import request_permissions, Permission
+
     request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
     from android.storage import primary_external_storage_path
 
     root_path = primary_external_storage_path()
-    games_path = path.join(root_path, 'GridBord')
+    games_path = path.join(root_path, 'GridBoard')
     Window.softinput_mode = 'below_target'
 
 with open('Credit.txt', 'r') as f:
@@ -60,7 +63,7 @@ class Game(MDScreenManager):
 
         # TO MAKE CHANGES TO ALL GAME SETS UNCOMMENT
         # for gset in self.game_sets:
-        #     gset.grid["click"] = True
+        #     gset.init["grid"]['fit_screen'] = True
         #     gset.save()
 
     def on_editing_set(self, _, editing_set):
@@ -85,17 +88,49 @@ class Game(MDScreenManager):
                 if name == gset.name:
                     toast("used name")
                     return
+        if self.ids.debug.active:
+            self.editing_set.init['debug'] = True
         if self.editing_set.save(self.new):
+            if self.ids.generate_code.active:
+                self.editing_set.generate_code()
             self.current = 'themes_assets'
             self.new = False
             self.game_sets = []
             self.get_game_sets()
+
+    def confirm_code_generation(self, checkbox):
+        if self.new or not self.editing_set.code_path:
+            return
+
+        def cancel(func):
+            func()
+            checkbox.active = False
+
+        dialog = MDDialog(title="Confirm", text="if you keep this checked the exiting code file will be overriden",
+                          buttons=[
+                              MDFlatButton(
+                                  text="CANCEL",
+                                  theme_text_color="Custom",
+                                  text_color=[1, 0, 0, 1],
+                                  on_press=lambda x: cancel(dialog.dismiss)
+
+                              ),
+                              MDFlatButton(
+                                  text="I'm Aware",
+                                  theme_text_color="Custom",
+                                  text_color=[0, 1, 0, 1],
+                                  on_press=lambda x: dialog.dismiss()
+                              ),
+                          ])
+        dialog.open()
 
     def open_url(self, url):
         webbrowser.open(url)
 
     def on_game_set(self, _, value):
         MDApp.get_running_app().save_confs()
+        if "game_screen" in self.screen_names:
+            self.get_screen('game_screen').restart()
 
 
 class GridBoard(MDApp):
@@ -120,7 +155,7 @@ class GridBoard(MDApp):
         if i + 1 >= len(self.languages):
             self.lang_name = self.languages[0]
             return
-        self.lang_name = self.languages[i+1]
+        self.lang_name = self.languages[i + 1]
 
     def build_config(self, config):
         config.setdefaults('Confs', {'game_set': '', 'language': 'english'})
